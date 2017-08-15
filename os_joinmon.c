@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2005 William Pitcock <nenolod -at- nenolod.net>
+ * Copyright (c) 2017 ChatLounge IRC Network Development Team <http://www.chatlounge.net>
+ *
  * Rights to this code are as documented in doc/LICENSE.
  *
  * Facilitates watching what channels a user joins.
@@ -12,7 +14,7 @@ DECLARE_MODULE_V1
 (
 	"contrib/os_joinmon", true, _modinit, _moddeinit,
 	PACKAGE_STRING,
-	"Atheme Development Group <http://www.atheme.net>"
+	"ChatLounge IRC Network Development Team <http://www.chatlounge.net>"
 );
 
 static void watch_user_joins(hook_channel_joinpart_t *hdata);
@@ -121,8 +123,8 @@ static void watch_user_joins(hook_channel_joinpart_t *hdata)
 			 * kind of stupid. Give it it's own logtype if logtypes are ever
 			 * addable by modules.
 			 */
-			slog(LG_INFO, "JOINMON: \2%s\2 who matches \2%s\2 has joined \2%s\2",
-					cu->user->nick, l->user, cu->chan->name);
+			slog(LG_INFO, "JOINMON: \2%s\2 (\2%s\2@\2%s\2) [\2%s\2] (\2%s\2) (Account: \2%s\2) who matches \2%s\2 has joined \2%s\2",
+					cu->user->nick, cu->user->user, cu->user->host, cu->user->gecos, cu->user->ip, cu->user->myuser == NULL ? "<Not logged in>" : entity(cu->user->myuser)->name, l->user, cu->chan->name);
 			return;
 		}
 	}
